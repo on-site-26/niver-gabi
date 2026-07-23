@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convite Anos 2000 - Gabriella Santos</title>
+  
+  <!-- Fontes Y2K Futuro-Retro -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Biblioteca de Animação ao Rolar (AOS) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-black: #000000;
+      --card-bg: rgba(18, 5, 12, 0.90);
+      --pink-y2k: #ff007f;
+      --pink-glow: rgba(255, 0, 127, 0.6);
+      --red-decline: #dc2626;
+      --red-glow: rgba(220, 38, 38, 0.6);
+      --silver-chrome: #ffffff;
+      --border-silver: rgba(255, 255, 255, 0.3);
+      --text-muted: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px 15px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fundo Rosa Neon em Degradê Fixo */
+    .neon-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 50% 20%, rgba(255, 0, 127, 0.35), transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(255, 0, 127, 0.2), transparent 50%),
+        linear-gradient(180deg, #000000 0%, #1a000e 100%);
+    }
+
+    /* Card Principal */
+    .card-invitation {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--pink-y2k);
+      border-radius: 28px;
+      box-shadow: 
+        0 0 35px var(--pink-glow),
+        inset 0 0 20px rgba(255, 0, 127, 0.2);
+      width: 100%;
+      max-width: 500px;
+      padding: 45px 30px;
+      text-align: center;
+      position: relative;
+      animation: pulseBorder 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseBorder {
+      0% { box-shadow: 0 0 25px var(--pink-glow), inset 0 0 15px rgba(255, 0, 127, 0.2); }
+      100% { box-shadow: 0 0 45px rgba(255, 0, 127, 0.8), inset 0 0 25px rgba(255, 0, 127, 0.4); }
+    }
+
+    /* Nome CONVITE Animado */
+    .main-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      line-height: 1;
+      text-shadow: 
+        0 0 10px var(--pink-y2k),
+        0 0 20px var(--pink-y2k),
+        0 0 40px var(--pink-y2k);
+      animation: neonFlicker 2.5s infinite alternate;
+    }
+
+    @keyframes neonFlicker {
+      0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--pink-y2k), 0 0 20px var(--pink-y2k), 0 0 35px var(--pink-y2k); }
+      50% { opacity: 0.85; text-shadow: 0 0 5px var(--pink-y2k), 0 0 10px var(--pink-y2k), 0 0 15px var(--pink-y2k); }
+    }
+
+    .y2k-tag {
+      display: inline-block;
+      border: 1px solid var(--pink-y2k);
+      color: var(--pink-y2k);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      padding: 8px 20px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      box-shadow: 0 0 12px var(--pink-glow);
+    }
+
+    /* Nome e Idade */
+    .name-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--silver-chrome);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+      animation: pulseText 2s ease-in-out infinite;
+    }
+
+    .age-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--pink-y2k);
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px var(--pink-glow);
+      animation: pulseText 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseText {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    /* Caixa de Informações */
+    .info-box {
+      border-top: 1px solid var(--border-silver);
+      border-bottom: 1px solid var(--border-silver);
+      padding: 22px 0;
+      margin: 25px 0;
+      text-align: left;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    .info-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-label { color: var(--text-muted); }
+    .info-value { color: var(--silver-chrome); font-weight: 700; text-align: right; }
+
+    /* Estilo Geral de Botões Interativos */
+    .btn-action {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-action:active {
+      transform: scale(0.95) !important;
+      box-shadow: 0 0 5px #fff !important;
+    }
+
+    .btn-location {
+      background: transparent;
+      border: 1px solid var(--pink-y2k);
+      color: var(--pink-y2k);
+      box-shadow: 0 0 12px var(--pink-glow);
+      margin-top: 15px;
+    }
+
+    .btn-location:hover {
+      background: var(--pink-y2k);
+      color: #000;
+      box-shadow: 0 0 25px var(--pink-y2k);
+      transform: translateY(-2px);
+    }
+
+    .btn-gift-toggle {
+      background: transparent;
+      border: 1px solid var(--border-silver);
+      color: var(--silver-chrome);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-gift-toggle:hover {
+      border-color: var(--pink-y2k);
+      color: var(--pink-y2k);
+      box-shadow: 0 0 18px var(--pink-glow);
+      transform: translateY(-2px);
+    }
+
+    .gift-dropdown {
+      display: none;
+      background: rgba(0, 0, 0, 0.95);
+      border: 1px solid var(--pink-y2k);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: left;
+      box-shadow: 0 0 15px var(--pink-glow);
+    }
+
+    .gift-dropdown ul {
+      list-style-type: '🎁 ';
+      padding-left: 20px;
+      line-height: 1.9;
+    }
+
+    /* Traje */
+    .dresscode-box {
+      background: rgba(255, 0, 127, 0.08);
+      border: 1px solid rgba(255, 0, 127, 0.3);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 25px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      text-align: left;
+      line-height: 1.5;
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.1);
+    }
+
+    .dresscode-box strong { color: var(--pink-y2k); }
+    .dresscode-section { margin-top: 10px; padding-top: 8px; border-top: 1px dashed rgba(255, 0, 127, 0.25); }
+    .dresscode-prize {
+      margin-top: 14px; padding: 10px;
+      background: rgba(255, 0, 127, 0.12);
+      border: 1px solid var(--pink-y2k);
+      border-radius: 10px; color: #fff; font-weight: 700;
+      text-align: center; box-shadow: 0 0 12px var(--pink-glow);
+    }
+
+    /* Formulário e Campo de Entrada de Nome */
+    .form-group { margin-bottom: 20px; text-align: left; }
+
+    label {
+      display: block; font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem; letter-spacing: 1px; margin-bottom: 10px;
+      color: var(--silver-chrome); line-height: 1.4; text-transform: uppercase;
+    }
+
+    input[type="text"] {
+      width: 100%; padding: 14px; border-radius: 12px;
+      border: 1px solid var(--border-silver); background: #000;
+      color: #fff; font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; outline: none; transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--pink-y2k);
+      box-shadow: 0 0 15px var(--pink-glow);
+    }
+
+    /* Aviso do Prazo */
+    .deadline-notice {
+      margin-bottom: 18px; font-size: 0.82rem; color: var(--pink-y2k);
+      font-weight: 700; background: rgba(255, 0, 127, 0.12); padding: 12px;
+      border-radius: 10px; border: 1px dashed var(--pink-y2k);
+      text-align: center; line-height: 1.5; box-shadow: 0 0 12px var(--pink-glow);
+    }
+
+    /* Botão de Confirmação Principal */
+    .btn-confirm {
+      background: linear-gradient(135deg, #ffffff, #cbd5e1);
+      color: #000; border: none;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-confirm:hover {
+      background: #fff; box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+      transform: translateY(-2px);
+    }
+
+    /* Novo Botão Vermelho "Não conseguirei ir" */
+    .btn-decline {
+      background: var(--red-decline);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 0 15px var(--red-glow);
+      margin-top: 12px;
+    }
+
+    .btn-decline:hover {
+      background: #ef4444;
+      box-shadow: 0 0 25px var(--red-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-admin {
+      background: transparent; border: 1px solid var(--border-silver);
+      color: var(--text-muted); margin-top: 20px;
+    }
+
+    .btn-admin:hover { color: #fff; border-color: var(--pink-y2k); }
+
+    /* Modal Admin */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(10px);
+      z-index: 100; justify-content: center; align-items: center; padding: 20px;
+    }
+
+    .modal-content {
+      background: #0d0014; border: 1px solid var(--pink-y2k);
+      border-radius: 20px; padding: 30px; width: 100%; max-width: 450px;
+      box-shadow: 0 0 30px var(--pink-glow); max-height: 85vh; overflow-y: auto;
+    }
+
+    input[type="password"] {
+      width: 100%; padding: 12px; border-radius: 10px;
+      border: 1px solid var(--border-silver); background: #000;
+      color: #fff; font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 15px; outline: none;
+    }
+
+    .admin-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      text-align: left;
+    }
+
+    .admin-section-title.title-yes { color: var(--pink-y2k); border-bottom: 1px solid var(--pink-y2k); }
+    .admin-section-title.title-no { color: #f87171; border-bottom: 1px solid #f87171; }
+
+    .guest-list { list-style: none; text-align: left; margin-bottom: 15px; }
+
+    .guest-item {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .guest-name { color: var(--silver-chrome); font-weight: 600; }
+    .guest-anonymous { color: #94a3b8; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <!-- Fundo Rosa Neon em Degradê -->
+  <div class="neon-bg"></div>
+
+  <div class="card-invitation" data-aos="zoom-in" data-aos-duration="1000">
+    
+    <!-- Título Principal Animado -->
+    <h2 class="main-title" data-aos="fade-down" data-aos-delay="200">CONVITE</h2>
+    
+    <div data-aos="fade-down" data-aos-delay="300">
+      <span class="y2k-tag">Festa Estilo Anos 2000</span>
+    </div>
+    
+    <h1 class="name-title" data-aos="fade-up" data-aos-delay="400">Gabriella Santos</h1>
+    <div class="age-tag" data-aos="fade-up" data-aos-delay="500">24 Anos</div>
+
+    <!-- Bloco de Informações -->
+    <div class="info-box" data-aos="fade-up" data-aos-delay="600">
+      <div class="info-item">
+        <span class="info-label">Data:</span>
+        <span class="info-value">01/08/2026</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Local:</span>
+        <span class="info-value">Dianass Eventos</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Horário:</span>
+        <span class="info-value">18:00h</span>
+      </div>
+
+      <!-- Botão Mapa -->
+      <a href="https://maps.app.goo.gl/UraQuGqEn4Md4Ku99" target="_blank" rel="noopener noreferrer" class="btn-action btn-location">
+        📍 Abrir Localização do evento
+      </a>
+
+      <!-- Botão Sugestão de Presentes -->
+      <button id="toggleGiftBtn" type="button" class="btn-action btn-gift-toggle">
+        <span>🎁 Sugestão de Presentes</span>
+        <span id="giftArrow">▼</span>
+      </button>
+
+      <!-- Lista de Sugestões de Presentes -->
+      <div id="giftDropdown" class="gift-dropdown">
+        <ul>
+          <li>Jóias (pratas, douradas ou bijuterias)</li>
+          <li>Sandálias ou saltos (tamanho 36)</li>
+          <li>Roupa fitness (tamanho M)</li>
+          <li>Shorts, calças ou vestidos (tamanho 38)</li>
+          <li>Relógios, pulseiras ou colares</li>
+          <li>Bolsas de lado</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sugestão de Traje -->
+    <div class="dresscode-box" data-aos="fade-up" data-aos-delay="700">
+      💡 <strong>Sugestão de Traje (Anos 2000):</strong>
+      
+      <div class="dresscode-section">
+        <strong>Feminino:</strong> Jeans cintura baixa, calça cargo, tops metalizados/brilhantes, minissaias, presilhas de cabelo e óculos retro/coloridos.
+      </div>
+      
+      <div class="dresscode-section">
+        <strong>Masculino:</strong> Camisas oversized, calça jeans larga, bonés aba reta, correntes prateadas ou douradas, jaquetas ou regatas retro.
+      </div>
+
+      <div class="dresscode-prize">
+        🏆 O melhor traje concorrerá a uma premiação surpresa!
+      </div>
+    </div>
+
+    <!-- Formulário de RSVP com Botões de 'Confirmar' e 'Não conseguirei ir' -->
+    <form id="rsvpForm" data-aos="fade-up" data-aos-delay="800">
+      <div class="form-group">
+        <label for="guestName">COLOQUE SEU NOME ABAIXO E CONFIRME SUA PRESENÇA:</label>
+        <input type="text" id="guestName" placeholder="Digite seu nome completo...">
+      </div>
+
+      <!-- Observação de Prazo -->
+      <p class="deadline-notice">
+        ⚠️ Observação: Confirme sua presença até o dia 29 de julho de 2026. Caso for levar seu namorado ou esposo, coloque o nome dele e confirme a presença.
+      </p>
+
+      <!-- Botão Confirmar Presença -->
+      <button type="button" id="btnConfirmYes" class="btn-action btn-confirm">Confirmar Presença</button>
+      
+      <!-- Novo Botão Vermelho: Não conseguirei ir -->
+      <button type="button" id="btnConfirmNo" class="btn-action btn-decline">Não conseguirei ir</button>
+    </form>
+
+    <button id="openAdminBtn" class="btn-action btn-admin" data-aos="fade-up" data-aos-delay="900">🔒 Aba do (Organizador)</button>
+  </div>
+
+  <!-- Modal Admin -->
+  <div class="modal" id="adminModal">
+    <div class="modal-content">
+      <h3 style="font-family: 'Orbitron'; font-size: 1.1rem; margin-bottom: 20px; color: var(--silver-chrome);">Painel de Respostas</h3>
+      
+      <div id="adminAuthSection">
+        <div class="form-group">
+          <label for="adminPassword">SENHA DE ACESSO:</label>
+          <input type="password" id="adminPassword" placeholder="Digite a senha...">
+        </div>
+        <button id="loginAdminBtn" class="btn-action btn-confirm">Acessar</button>
+      </div>
+
+      <div id="adminDataSection" style="display: none;">
+        <!-- Pessoas Confirmadas -->
+        <h4 class="admin-section-title title-yes">✅ Confirmados:</h4>
+        <ul class="guest-list" id="guestListYes"></ul>
+
+        <!-- Pessoas que Não Irão -->
+        <h4 class="admin-section-title title-no">❌ Não conseguirão ir:</h4>
+        <ul class="guest-list" id="guestListNo"></ul>
+
+        <button id="closeAdminBtn" class="btn-action btn-admin" style="margin-top: 20px;">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts de Animação AOS e Firebase -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      duration: 800
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // Configurações do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCcJp5c-YY6Hf7X8jfg_UMrtgJSi7UlOfQ",
+      authDomain: "niver-gabi-24.firebaseapp.com",
+      databaseURL: "https://niver-gabi-24-default-rtdb.firebaseio.com",
+      projectId: "niver-gabi-24",
+      storageBucket: "niver-gabi-24.firebasestorage.app",
+      messagingSenderId: "724902726117",
+      appId: "1:724902726117:web:630ed3b414888d2084070c",
+      measurementId: "G-BTQ3SDEC1V"
+  };
+
+    const SENHA_ADMIN = "1232000";
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Toggle Lista de Presentes
+    const toggleGiftBtn = document.getElementById('toggleGiftBtn');
+    const giftDropdown = document.getElementById('giftDropdown');
+    const giftArrow = document.getElementById('giftArrow');
+
+    toggleGiftBtn.addEventListener('click', () => {
+      const isVisible = giftDropdown.style.display === 'block';
+      giftDropdown.style.display = isVisible ? 'none' : 'block';
+      giftArrow.textContent = isVisible ? '▼' : '▲';
+    });
+
+    // Função de Envio de Resposta (Sim / Não)
+    async function registrarResposta(vaiComparecer) {
+      const inputNome = document.getElementById('guestName');
+      let nomeDigitado = inputNome.value.trim();
+
+      // Validação caso a pessoa queira CONFIRMAR sem digitar o nome
+      if (vaiComparecer && !nomeDigitado) {
+        alert("Por favor, digite seu nome para confirmar a presença!");
+        inputNome.focus();
+        return;
+      }
+
+      // Se for recusa e não tiver nome, salva como Anônimo
+      if (!vaiComparecer && !nomeDigitado) {
+        nomeDigitado = "Anônimo (Sem nome informado)";
+      }
+
+      try {
+        const rsvpRef = ref(database, 'convidados');
+        await push(rsvpRef, {
+          nome: nomeDigitado,
+          confirmado: vaiComparecer ? "Sim" : "Não",
+          data: new Date().toISOString()
+        });
+
+        if (vaiComparecer) {
+          alert(`Presença confirmada com sucesso, ${nomeDigitado}! 🎉`);
+        } else {
+          alert("Resposta enviada. Agradecemos por avisar! ❤️");
+        }
+
+        inputNome.value = '';
+      } catch (error) {
+        console.error("Erro ao salvar no banco:", error);
+        alert("Erro ao enviar resposta. Verifique a conexão.");
+      }
+    }
+
+    document.getElementById('btnConfirmYes').addEventListener('click', () => registrarResposta(true));
+    document.getElementById('btnConfirmNo').addEventListener('click', () => registrarResposta(false));
+
+    // Lógica do Modal do Organizador
+    const modal = document.getElementById('adminModal');
+    const openAdminBtn = document.getElementById('openAdminBtn');
+    const loginAdminBtn = document.getElementById('loginAdminBtn');
+    const closeAdminBtn = document.getElementById('closeAdminBtn');
+    const authSection = document.getElementById('adminAuthSection');
+    const dataSection = document.getElementById('adminDataSection');
+
+    openAdminBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      authSection.style.display = 'block';
+      dataSection.style.display = 'none';
+      document.getElementById('adminPassword').value = '';
+    });
+
+    closeAdminBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    loginAdminBtn.addEventListener('click', async () => {
+      const inputPass = document.getElementById('adminPassword').value;
+
+      if (inputPass === SENHA_ADMIN) {
+        authSection.style.display = 'none';
+        dataSection.style.display = 'block';
+        await carregarRespostas();
+      } else {
+        alert("Senha incorreta!");
+      }
+    });
+
+    async function carregarRespostas() {
+      const listYes = document.getElementById('guestListYes');
+      const listNo = document.getElementById('guestListNo');
+      
+      listYes.innerHTML = "Carregando...";
+      listNo.innerHTML = "Carregando...";
+
+      try {
+        const rsvpRef = ref(database, 'convidados');
+        const snapshot = await get(rsvpRef);
+
+        if (snapshot.exists()) {
+          listYes.innerHTML = "";
+          listNo.innerHTML = "";
+          
+          const data = snapshot.val();
+          let countYes = 1;
+          let countNo = 1;
+
+          for (let id in data) {
+            const guest = data[id];
+            const li = document.createElement('li');
+            li.className = 'guest-item';
+
+            const nomeExibido = guest.nome || "Não informado";
+            const isAnonimo = nomeExibido.includes("Anônimo");
+
+            if (guest.confirmado === "Sim") {
+              li.innerHTML = `
+                <span>#${countYes}</span>
+                <span class="guest-name">${nomeExibido}</span>
+              `;
+              listYes.appendChild(li);
+              countYes++;
+            } else {
+              li.innerHTML = `
+                <span>#${countNo}</span>
+                <span class="${isAnonimo ? 'guest-anonymous' : 'guest-name'}">${nomeExibido}</span>
+              `;
+              listNo.appendChild(li);
+              countNo++;
+            }
+          }
+
+          if (countYes === 1) listYes.innerHTML = "<li>Nenhum confirmado ainda.</li>";
+          if (countNo === 1) listNo.innerHTML = "<li>Nenhuma recusa registrada.</li>";
+
+        } else {
+          listYes.innerHTML = "<li>Nenhuma resposta registrada.</li>";
+          listNo.innerHTML = "<li>Nenhuma resposta registrada.</li>";
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+        listYes.innerHTML = "<li style='color:#f87171;'>Erro ao carregar lista.</li>";
+        listNo.innerHTML = "<li style='color:#f87171;'>Erro ao carregar lista.</li>";
+      }
+    }
+  </script>
+</body>
+</html>
