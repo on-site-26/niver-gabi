@@ -268,7 +268,7 @@
       text-align: center; box-shadow: 0 0 12px var(--pink-glow);
     }
 
-    /* Formulário e Campo de Entrada de Nome */
+    /* Formulário e Campo de Entrada */
     .form-group { margin-bottom: 20px; text-align: left; }
 
     label {
@@ -277,14 +277,19 @@
       color: var(--silver-chrome); line-height: 1.4; text-transform: uppercase;
     }
 
-    input[type="text"] {
+    input[type="text"], textarea {
       width: 100%; padding: 14px; border-radius: 12px;
       border: 1px solid var(--border-silver); background: #000;
       color: #fff; font-family: 'Space Grotesk', sans-serif;
       font-size: 0.95rem; outline: none; transition: all 0.3s ease;
     }
 
-    input[type="text"]:focus {
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    input[type="text"]:focus, textarea:focus {
       border-color: var(--pink-y2k);
       box-shadow: 0 0 15px var(--pink-glow);
     }
@@ -309,7 +314,7 @@
       transform: translateY(-2px);
     }
 
-    /* Novo Botão Vermelho "Não conseguirei ir" */
+    /* Botão Vermelho "Não conseguirei ir" */
     .btn-decline {
       background: var(--red-decline);
       color: #ffffff;
@@ -324,6 +329,28 @@
       transform: translateY(-2px);
     }
 
+    /* Botão Mensagem */
+    .btn-message {
+      background: transparent;
+      border: 1px solid var(--pink-y2k);
+      color: #fff;
+      box-shadow: 0 0 15px var(--pink-glow);
+      margin-top: 12px;
+    }
+
+    .btn-message:hover {
+      background: rgba(255, 0, 127, 0.2);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+      background: transparent;
+      border: 1px solid var(--border-silver);
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
     .btn-admin {
       background: transparent; border: 1px solid var(--border-silver);
       color: var(--text-muted); margin-top: 20px;
@@ -331,7 +358,7 @@
 
     .btn-admin:hover { color: #fff; border-color: var(--pink-y2k); }
 
-    /* Modal Admin */
+    /* Modal Admin e Modais de RSVP */
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(10px);
@@ -363,11 +390,12 @@
 
     .admin-section-title.title-yes { color: var(--pink-y2k); border-bottom: 1px solid var(--pink-y2k); }
     .admin-section-title.title-no { color: #f87171; border-bottom: 1px solid #f87171; }
+    .admin-section-title.title-msg { color: #38bdf8; border-bottom: 1px solid #38bdf8; }
 
     .guest-list { list-style: none; text-align: left; margin-bottom: 15px; }
 
     .guest-item {
-      padding: 8px 0;
+      padding: 10px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: space-between;
@@ -375,7 +403,49 @@
     }
 
     .guest-name { color: var(--silver-chrome); font-weight: 600; }
-    .guest-anonymous { color: #94a3b8; font-style: italic; }
+
+    /* Estilo dos Cards de Mensagem */
+    .msg-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--pink-y2k);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .msg-text {
+      color: #fff;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .msg-author {
+      color: var(--pink-y2k);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      text-align: right;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* Modal de Alerta Animado Personalizado */
+    .animated-modal-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 25px;
+      animation: popText 0.5s ease-out forwards;
+    }
+
+    @keyframes popText {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -451,32 +521,76 @@
       </div>
     </div>
 
-    <!-- Formulário de RSVP com Botões de 'Confirmar' e 'Não conseguirei ir' -->
-    <form id="rsvpForm" data-aos="fade-up" data-aos-delay="800">
-      <div class="form-group">
-        <label for="guestName">COLOQUE SEU NOME ABAIXO E CONFIRME SUA PRESENÇA:</label>
-        <input type="text" id="guestName" placeholder="Digite seu nome completo...">
-      </div>
-
-      <!-- Observação de Prazo -->
+    <!-- Observação de Prazo e Botões de Ação Directos -->
+    <div data-aos="fade-up" data-aos-delay="800">
       <p class="deadline-notice">
         ⚠️ Observação: Confirme sua presença até o dia 29 de julho de 2026. Caso for levar seu namorado ou esposo, coloque o nome dele e confirme a presença.
       </p>
 
-      <!-- Botão Confirmar Presença -->
-      <button type="button" id="btnConfirmYes" class="btn-action btn-confirm">Confirmar Presença</button>
-      
-      <!-- Novo Botão Vermelho: Não conseguirei ir -->
-      <button type="button" id="btnConfirmNo" class="btn-action btn-decline">Não conseguirei ir</button>
-    </form>
+      <!-- Botões Principais -->
+      <button type="button" id="openModalYes" class="btn-action btn-confirm">Confirmar Presença</button>
+      <button type="button" id="openModalNo" class="btn-action btn-decline">Não conseguirei ir</button>
+      <button type="button" id="openModalMsg" class="btn-action btn-message">💬 Enviar Mensagem para a Aniversariante</button>
+    </div>
 
     <button id="openAdminBtn" class="btn-action btn-admin" data-aos="fade-up" data-aos-delay="900">🔒 Aba do (Organizador)</button>
+  </div>
+
+  <!-- Modal Sobreposição: CONFIRMAR PRESENÇA -->
+  <div class="modal" id="modalConfirmYes">
+    <div class="modal-content">
+      <h3 style="font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 20px; color: var(--silver-chrome);">CONFIRMAR PRESENÇA</h3>
+      <div class="form-group">
+        <label for="guestNameYes">DIGITE SEU NOME COMPLETO (OBRIGATÓRIO):</label>
+        <input type="text" id="guestNameYes" placeholder="Digite seu nome completo...">
+      </div>
+      <button type="button" id="btnSubmitYes" class="btn-action btn-confirm">Confirmar Presença</button>
+      <button type="button" id="closeModalYes" class="btn-action btn-cancel">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal Sobreposição: NÃO CONSEGUIREI IR -->
+  <div class="modal" id="modalConfirmNo">
+    <div class="modal-content" style="border-color: var(--red-decline); box-shadow: 0 0 30px var(--red-glow);">
+      <h3 style="font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 20px; color: #f87171;">NÃO CONSEGUIREI IR</h3>
+      <div class="form-group">
+        <label for="guestNameNo">DIGITE SEU NOME COMPLETO (OBRIGATÓRIO):</label>
+        <input type="text" id="guestNameNo" placeholder="Digite seu nome completo...">
+      </div>
+      <button type="button" id="btnSubmitNo" class="btn-action btn-decline">Enviar Resposta</button>
+      <button type="button" id="closeModalNo" class="btn-action btn-cancel">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal Sobreposição: ENVIAR MENSAGEM -->
+  <div class="modal" id="modalSendMessage">
+    <div class="modal-content">
+      <h3 style="font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 20px; color: var(--pink-y2k);">MENSAGEM PARA A GABRIELLA</h3>
+      <div class="form-group">
+        <label for="msgGuestName">SEU NOME COMPLETO (OBRIGATÓRIO):</label>
+        <input type="text" id="msgGuestName" placeholder="Digite seu nome...">
+      </div>
+      <div class="form-group">
+        <label for="msgGuestText">MENSAGEM:</label>
+        <textarea id="msgGuestText" placeholder="Escreva sua mensagem aqui..."></textarea>
+      </div>
+      <button type="button" id="btnSubmitMessage" class="btn-action btn-confirm">Enviar Mensagem</button>
+      <button type="button" id="closeModalMsg" class="btn-action btn-cancel">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal de Resposta Animada / Alerta Personalizado -->
+  <div class="modal" id="animatedAlertModal">
+    <div class="modal-content">
+      <div id="animatedAlertContent" class="animated-modal-text"></div>
+      <button type="button" id="closeAlertBtn" class="btn-action btn-confirm">Fechar</button>
+    </div>
   </div>
 
   <!-- Modal Admin -->
   <div class="modal" id="adminModal">
     <div class="modal-content">
-      <h3 style="font-family: 'Orbitron'; font-size: 1.1rem; margin-bottom: 20px; color: var(--silver-chrome);">Painel de Respostas</h3>
+      <h3 style="font-family: 'Orbitron'; font-size: 1.1rem; margin-bottom: 20px; color: var(--silver-chrome);">Painel do Organizador</h3>
       
       <div id="adminAuthSection">
         <div class="form-group">
@@ -487,15 +601,27 @@
       </div>
 
       <div id="adminDataSection" style="display: none;">
-        <!-- Pessoas Confirmadas -->
-        <h4 class="admin-section-title title-yes">✅ Confirmados:</h4>
-        <ul class="guest-list" id="guestListYes"></ul>
+        <!-- Botão para alternar exibição de mensagens -->
+        <button id="toggleMessagesBtn" class="btn-action btn-message" style="margin-bottom: 20px;">💌 Mensagens dos Convidados</button>
 
-        <!-- Pessoas que Não Irão -->
-        <h4 class="admin-section-title title-no">❌ Não conseguirão ir:</h4>
-        <ul class="guest-list" id="guestListNo"></ul>
+        <div id="adminMainLists">
+          <!-- Pessoas Confirmadas -->
+          <h4 class="admin-section-title title-yes">✅ Confirmados:</h4>
+          <ul class="guest-list" id="guestListYes"></ul>
 
-        <button id="closeAdminBtn" class="btn-action btn-admin" style="margin-top: 20px;">Fechar</button>
+          <!-- Pessoas que Não Irão -->
+          <h4 class="admin-section-title title-no">❌ Não conseguirão ir:</h4>
+          <ul class="guest-list" id="guestListNo"></ul>
+        </div>
+
+        <!-- Seção de Mensagens (Oculta por Padrão) -->
+        <div id="adminMessagesSection" style="display: none;">
+          <h4 class="admin-section-title title-msg">💬 Mensagens Recebidas:</h4>
+          <div id="messagesContainer"></div>
+          <button id="backToListsBtn" class="btn-action btn-cancel" style="margin-top: 15px;">← Voltar para Lista de Convidados</button>
+        </div>
+
+        <button id="closeAdminBtn" class="btn-action btn-admin" style="margin-top: 20px;">Fechar Painel</button>
       </div>
     </div>
   </div>
@@ -523,11 +649,24 @@
       messagingSenderId: "724902726117",
       appId: "1:724902726117:web:630ed3b414888d2084070c",
       measurementId: "G-BTQ3SDEC1V"
-  };
+    };
 
     const SENHA_ADMIN = "1232000";
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
+
+    // Funções de Ajuda para Abrir Alertas Personalizados
+    const animatedAlertModal = document.getElementById('animatedAlertModal');
+    const animatedAlertContent = document.getElementById('animatedAlertContent');
+    
+    function showAlert(htmlText) {
+      animatedAlertContent.innerHTML = htmlText;
+      animatedAlertModal.style.display = 'flex';
+    }
+
+    document.getElementById('closeAlertBtn').addEventListener('click', () => {
+      animatedAlertModal.style.display = 'none';
+    });
 
     // Toggle Lista de Presentes
     const toggleGiftBtn = document.getElementById('toggleGiftBtn');
@@ -540,21 +679,40 @@
       giftArrow.textContent = isVisible ? '▼' : '▲';
     });
 
-    // Função de Envio de Resposta (Sim / Não)
+    // Controle dos Modais
+    const modalConfirmYes = document.getElementById('modalConfirmYes');
+    const modalConfirmNo = document.getElementById('modalConfirmNo');
+    const modalSendMessage = document.getElementById('modalSendMessage');
+
+    document.getElementById('openModalYes').addEventListener('click', () => {
+      document.getElementById('guestNameYes').value = '';
+      modalConfirmYes.style.display = 'flex';
+    });
+
+    document.getElementById('openModalNo').addEventListener('click', () => {
+      document.getElementById('guestNameNo').value = '';
+      modalConfirmNo.style.display = 'flex';
+    });
+
+    document.getElementById('openModalMsg').addEventListener('click', () => {
+      document.getElementById('msgGuestName').value = '';
+      document.getElementById('msgGuestText').value = '';
+      modalSendMessage.style.display = 'flex';
+    });
+
+    document.getElementById('closeModalYes').addEventListener('click', () => modalConfirmYes.style.display = 'none');
+    document.getElementById('closeModalNo').addEventListener('click', () => modalConfirmNo.style.display = 'none');
+    document.getElementById('closeModalMsg').addEventListener('click', () => modalSendMessage.style.display = 'none');
+
+    // Registrar Resposta de Presença (Nome Obrigatório em Ambos)
     async function registrarResposta(vaiComparecer) {
-      const inputNome = document.getElementById('guestName');
-      let nomeDigitado = inputNome.value.trim();
+      let nomeInput = vaiComparecer ? document.getElementById('guestNameYes') : document.getElementById('guestNameNo');
+      let nomeDigitado = nomeInput.value.trim();
 
-      // Validação caso a pessoa queira CONFIRMAR sem digitar o nome
-      if (vaiComparecer && !nomeDigitado) {
-        alert("Por favor, digite seu nome para confirmar a presença!");
-        inputNome.focus();
+      if (!nomeDigitado) {
+        alert("Por favor, digite seu nome para continuar!");
+        nomeInput.focus();
         return;
-      }
-
-      // Se for recusa e não tiver nome, salva como Anônimo
-      if (!vaiComparecer && !nomeDigitado) {
-        nomeDigitado = "Anônimo (Sem nome informado)";
       }
 
       try {
@@ -566,38 +724,76 @@
         });
 
         if (vaiComparecer) {
-          alert(`Presença confirmada com sucesso, ${nomeDigitado}! 🎉`);
+          modalConfirmYes.style.display = 'none';
+          showAlert(`✨ <strong>SUA PRESENÇA FOI CONFIRMADA!</strong><br><br>ESTOU ANSIOSA PELA SUA PRESENÇA. TE AGUARDO DIA 01/08 ÀS 18H NO DIANASS EVENTOS. 🎉`);
         } else {
-          alert("Resposta enviada. Agradecemos por avisar! ❤️");
+          modalConfirmNo.style.display = 'none';
+          showAlert(`💔 <strong>QUE PENA QUE VOCÊ NÃO VAI PODER PARTICIPAR!</strong><br><br>MAIS SAIBA QUE LEMBREI DE VOCÊ, NOS VEREMOS EM OUTRA OCASIÃO. ❤️`);
         }
-
-        inputNome.value = '';
       } catch (error) {
         console.error("Erro ao salvar no banco:", error);
-        alert("Erro ao enviar resposta. Verifique a conexão.");
+        alert("Erro ao enviar resposta. Tente novamente.");
       }
     }
 
-    document.getElementById('btnConfirmYes').addEventListener('click', () => registrarResposta(true));
-    document.getElementById('btnConfirmNo').addEventListener('click', () => registrarResposta(false));
+    document.getElementById('btnSubmitYes').addEventListener('click', () => registrarResposta(true));
+    document.getElementById('btnSubmitNo').addEventListener('click', () => registrarResposta(false));
 
-    // Lógica do Modal do Organizador
-    const modal = document.getElementById('adminModal');
+    // Registrar Mensagem para a Aniversariante
+    document.getElementById('btnSubmitMessage').addEventListener('click', async () => {
+      const nome = document.getElementById('msgGuestName').value.trim();
+      const mensagem = document.getElementById('msgGuestText').value.trim();
+
+      if (!nome) {
+        alert("Por favor, informe seu nome!");
+        document.getElementById('msgGuestName').focus();
+        return;
+      }
+
+      if (!mensagem) {
+        alert("Por favor, escreva uma mensagem!");
+        document.getElementById('msgGuestText').focus();
+        return;
+      }
+
+      try {
+        const msgRef = ref(database, 'mensagens');
+        await push(msgRef, {
+          nome: nome,
+          mensagem: mensagem,
+          data: new Date().toISOString()
+        });
+
+        modalSendMessage.style.display = 'none';
+        showAlert(`💌 <strong>MENSAGEM ENVIADA!</strong><br><br>Muito obrigada pelo carinho, ${nome}! Sua mensagem foi entregue com sucesso! ❤️`);
+      } catch (error) {
+        console.error("Erro ao enviar mensagem:", error);
+        alert("Erro ao enviar mensagem. Tente novamente.");
+      }
+    });
+
+    // Lógica do Painel do Organizador
+    const modalAdmin = document.getElementById('adminModal');
     const openAdminBtn = document.getElementById('openAdminBtn');
     const loginAdminBtn = document.getElementById('loginAdminBtn');
     const closeAdminBtn = document.getElementById('closeAdminBtn');
     const authSection = document.getElementById('adminAuthSection');
     const dataSection = document.getElementById('adminDataSection');
+    
+    const adminMainLists = document.getElementById('adminMainLists');
+    const adminMessagesSection = document.getElementById('adminMessagesSection');
+    const toggleMessagesBtn = document.getElementById('toggleMessagesBtn');
+    const backToListsBtn = document.getElementById('backToListsBtn');
 
     openAdminBtn.addEventListener('click', () => {
-      modal.style.display = 'flex';
+      modalAdmin.style.display = 'flex';
       authSection.style.display = 'block';
       dataSection.style.display = 'none';
       document.getElementById('adminPassword').value = '';
     });
 
     closeAdminBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
+      modalAdmin.style.display = 'none';
     });
 
     loginAdminBtn.addEventListener('click', async () => {
@@ -606,12 +802,26 @@
       if (inputPass === SENHA_ADMIN) {
         authSection.style.display = 'none';
         dataSection.style.display = 'block';
+        adminMainLists.style.display = 'block';
+        adminMessagesSection.style.display = 'none';
         await carregarRespostas();
       } else {
         alert("Senha incorreta!");
       }
     });
 
+    toggleMessagesBtn.addEventListener('click', async () => {
+      adminMainLists.style.display = 'none';
+      adminMessagesSection.style.display = 'block';
+      await carregarMensagens();
+    });
+
+    backToListsBtn.addEventListener('click', () => {
+      adminMessagesSection.style.display = 'none';
+      adminMainLists.style.display = 'block';
+    });
+
+    // Carregar Lista de Convidados no Painel
     async function carregarRespostas() {
       const listYes = document.getElementById('guestListYes');
       const listNo = document.getElementById('guestListNo');
@@ -636,20 +846,17 @@
             const li = document.createElement('li');
             li.className = 'guest-item';
 
-            const nomeExibido = guest.nome || "Não informado";
-            const isAnonimo = nomeExibido.includes("Anônimo");
-
             if (guest.confirmado === "Sim") {
               li.innerHTML = `
                 <span>#${countYes}</span>
-                <span class="guest-name">${nomeExibido}</span>
+                <span class="guest-name">${guest.nome}</span>
               `;
               listYes.appendChild(li);
               countYes++;
             } else {
               li.innerHTML = `
                 <span>#${countNo}</span>
-                <span class="${isAnonimo ? 'guest-anonymous' : 'guest-name'}">${nomeExibido}</span>
+                <span class="guest-name">${guest.nome}</span>
               `;
               listNo.appendChild(li);
               countNo++;
@@ -667,6 +874,38 @@
         console.error("Erro ao carregar dados:", error);
         listYes.innerHTML = "<li style='color:#f87171;'>Erro ao carregar lista.</li>";
         listNo.innerHTML = "<li style='color:#f87171;'>Erro ao carregar lista.</li>";
+      }
+    }
+
+    // Carregar Mensagens dos Convidados no Painel
+    async function carregarMensagens() {
+      const messagesContainer = document.getElementById('messagesContainer');
+      messagesContainer.innerHTML = "Carregando mensagens...";
+
+      try {
+        const msgRef = ref(database, 'mensagens');
+        const snapshot = await get(msgRef);
+
+        if (snapshot.exists()) {
+          messagesContainer.innerHTML = "";
+          const data = snapshot.val();
+
+          for (let id in data) {
+            const msgObj = data[id];
+            const card = document.createElement('div');
+            card.className = 'msg-card';
+            card.innerHTML = `
+              <div class="msg-text">"${msgObj.mensagem}"</div>
+              <div class="msg-author">— ${msgObj.nome}</div>
+            `;
+            messagesContainer.appendChild(card);
+          }
+        } else {
+          messagesContainer.innerHTML = "<p style='font-size:0.85rem; color:var(--text-muted);'>Nenhuma mensagem recebida ainda.</p>";
+        }
+      } catch (error) {
+        console.error("Erro ao carregar mensagens:", error);
+        messagesContainer.innerHTML = "<p style='color:#f87171; font-size:0.85rem;'>Erro ao carregar mensagens.</p>";
       }
     }
   </script>
